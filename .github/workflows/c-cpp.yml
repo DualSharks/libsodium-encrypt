@@ -26,8 +26,15 @@ jobs:
         elif [ "${{ matrix.os }}" = "macos-latest" ]; then
           echo "No macOS-specific setup required"
         fi
+        
     - name: Generate configure script
-      run: autoconf
+      run: |
+        if [ -f "configure.ac" ]; then
+          autoconf
+        else
+          echo "configure.ac not found"
+          exit 1
+        fi
     - name: Run configure
       run: ./configure
     - name: Run make
