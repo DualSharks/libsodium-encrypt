@@ -21,7 +21,7 @@ jobs:
       run: |
         if [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
           sudo apt-get update
-          sudo apt-get install autoconf
+          sudo apt-get install -y autoconf
           # Any other Ubuntu-specific setup
         elif [ "${{ matrix.os }}" = "macos-latest" ]; then
           # Any macOS-specific setup
@@ -36,3 +36,4 @@ jobs:
       run: make check
     - name: Run make distcheck
       run: make distcheck
+
