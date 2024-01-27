@@ -9,38 +9,15 @@ on:
 jobs:
   build:
 
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
-    - name: Install dependencies (Ubuntu/macOS)
-      run: |
-        if [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
-          sudo apt-get update
-          sudo apt-get install -y autoconf
-          # Any other Ubuntu-specific setup
-        elif [ "${{ matrix.os }}" = "macos-latest" ]; then
-          echo "No macOS-specific setup required"
-        fi
-        
-    - name: Generate configure script
-      run: |
-        if [ -f "configure.ac" ]; then
-          autoconf
-        else
-          echo "configure.ac not found"
-          exit 1
-        fi
-    - name: Run configure
+    - name: configure
       run: ./configure
-    - name: Run make
+    - name: make
       run: make
-    - name: Run make check
+    - name: make check
       run: make check
-    - name: Run make distcheck
+    - name: make distcheck
       run: make distcheck
-
