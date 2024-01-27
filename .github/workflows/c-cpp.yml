@@ -17,11 +17,22 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: configure
+    - name: Install dependencies (Ubuntu/macOS)
+      run: |
+        if [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
+          sudo apt-get update
+          sudo apt-get install autoconf
+          # Any other Ubuntu-specific setup
+        elif [ "${{ matrix.os }}" = "macos-latest" ]; then
+          # Any macOS-specific setup
+        fi
+    - name: Generate configure script
+      run: autoconf
+    - name: Run configure
       run: ./configure
-    - name: make
+    - name: Run make
       run: make
-    - name: make check
+    - name: Run make check
       run: make check
-    - name: make distcheck
+    - name: Run make distcheck
       run: make distcheck
